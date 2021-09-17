@@ -1,6 +1,111 @@
 use yew::prelude::*;
 
 #[derive(Debug, Clone)]
+pub enum PlayStyle {
+    Human,
+    Computer
+}
+
+pub struct RecordGameInput {
+    props: RecordGameProps,
+    link: ComponentLink<Self>
+}
+
+#[derive(Debug, Clone, Properties)]
+pub struct RecordGameProps {
+    pub children: Children,
+    #[prop_or(false)]
+    pub record_game: bool
+}
+
+impl Component for RecordGameInput {
+    type Message = ();
+    type Properties = RecordGameProps;
+
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        Self { props, link }
+    }
+
+    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
+        false
+    }
+
+    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+        false
+    }
+
+    fn view(&self) -> Html {
+        html! {
+            <div>
+                <input type="checkbox" id="record" name="record"/>
+                <label for="record">{ "Record Game" }</label>
+            </div>
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct PlayerSettings {
+    props: PlayerSettingsProps,
+    link: ComponentLink<Self>
+}
+
+#[derive(Debug, Clone, Properties)]
+pub struct PlayerSettingsProps {
+    pub children: Children,
+    #[prop_or(PlayStyle::Human)]
+    pub play_style: PlayStyle,
+    #[prop_or(TileValue::S)]
+    pub tile_value: TileValue,
+    #[prop_or(PlayerTurn::PlayerOne)]
+    pub player: PlayerTurn
+}
+
+pub enum PlayerSettingsMsg {
+
+}
+
+impl Component for PlayerSettings {
+    type Message = PlayerSettingsMsg;
+    type Properties = PlayerSettingsProps;
+
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        Self { props, link }
+    }
+
+    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
+        false
+    }
+
+    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+        false
+    }
+
+    fn view(&self) -> Html {
+        let (player_id, player_name) = match self.props.player {
+            PlayerTurn::PlayerOne => ("player_one", "Player One"),
+            PlayerTurn::PlayerTwo => ("player_two", "Player Two"),
+        };
+
+        html! {
+            <>
+            <div id=player_id style="font-size: 1em; width: 110px; margin-bottom: 50px;">
+            <span class="name" style="margin-bottom: 50px;" text-align="center">{ player_name }</span><br/>
+            <input type="radio" name=format!("play_style_{}", player_id) value="Human" style="margin-bottom: 8px;"/>
+            <label for="human">{ "Human" }</label><br/>
+            <input type="radio" name=format!("tile_value_{}", player_id) value="S" style="margin-left: 30px; margin-bottom: 8px;"/>
+            <label for="s">{ "S" }</label><br/>
+            <input type="radio" name=format!("tile_value_{}", player_id) value="O" style="margin-left: 30px; margin-bottom: 8px;"/>
+            <label for="o">{ "O" }</label><br/>
+            <input type="radio" name=format!("play_style_{}", player_id) value="Computer" style="margin-bottom: 8px;"/>
+            <label for="computer">{ "Computer" }</label>
+            </div>
+            </>
+        }   
+    }
+}
+
+#[derive(Debug, Clone)]
 pub enum PlayerTurn {
     PlayerOne,
     PlayerTwo,
@@ -23,6 +128,15 @@ pub struct Tile {
     pub link: ComponentLink<Self>,
 }
 
+impl PartialEq for Tile {
+    fn eq(&self, other: &Self) -> bool {
+        match (&self.props.value, &other.props.value) {
+            (Some(self_value), Some(other_value)) => self_value == other_value,
+            _ => false
+        }
+    }
+}
+
 #[derive(Debug, Properties, Clone)]
 pub struct TileProps {
     pub children: Children,
@@ -32,6 +146,8 @@ pub struct TileProps {
     set: bool,
     #[prop_or(PlayerTurn::PlayerOne)]
     pub turn: PlayerTurn,
+    #[prop_or(None)]
+    pub set_by: Option<PlayerTurn>,
     #[prop_or(None)]
     pub grid_link: Option<ComponentLink<Grid>>
 }
@@ -50,12 +166,14 @@ impl Component for Tile {
                 match self.props.set {
                     true => (),
                     false => {
+                        // This should match against a radio button selection
                         self.props.value = match self.props.turn {
                             PlayerTurn::PlayerOne => Some(TileValue::S),
                             PlayerTurn::PlayerTwo => Some(TileValue::O),
                         };
                         self.props.set = true;
                         self.props.grid_link.as_ref().unwrap().callback(|_| Message::FlipTile ).emit("");
+                        self.props.set_by = Some(self.props.turn.clone());
                     }
                 }
             }
@@ -71,9 +189,9 @@ impl Component for Tile {
     fn view(&self) -> Html {
         let color = match self.props.set {
             false => "powderblue",
-            true => match self.props.value.clone().unwrap() {
-                TileValue::S => "thistle",
-                TileValue::O => "peachpuff",
+            true => match self.props.set_by.clone().unwrap() {
+                PlayerTurn::PlayerOne => "thistle",
+                PlayerTurn::PlayerTwo => "peachpuff",
             },
         };
         let button_style = format!("height:50px; width:50px; padding:0px; background-color:{}; margin:5px; border-radius: 15px; border: none;", color);
@@ -84,6 +202,7 @@ impl Component for Tile {
             },
             None => "\u{2063}",
         };
+        
         let onclick = {
             self.link.callback(move |_: MouseEvent| Message::FlipTile)
         };
@@ -142,8 +261,8 @@ impl Component for Grid {
         };
         let button_style = format!("width: 100%; height: 40px; padding:0px; background-color:{}; margin:0px; margin-bottom: 20px; border-radius: 15px; border: none;", color);
         let player = match self.props.turn {
-            PlayerTurn::PlayerOne => "S",
-            PlayerTurn::PlayerTwo => "O",
+            PlayerTurn::PlayerOne => "Player One",
+            PlayerTurn::PlayerTwo => "Player Two",
         };
         html! {
             <>
@@ -159,7 +278,7 @@ impl Component for Grid {
                         item
                     })}
                 </div>
-                <p>{ &self.props.message }</p>
+                // <p>{ &self.props.message }</p>
             </>
         }
     }

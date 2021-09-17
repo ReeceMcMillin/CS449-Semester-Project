@@ -23,96 +23,103 @@ impl Component for Model {
 
     fn view(&self) -> Html {
         html! {
-            <Grid>
-                // <div class="radio_container">
-                    // <span class="radio_button"><Radio radio_value="S">{"S"}</Radio></span>
-                    // <label for="S">{ "S" }</label>
-                    // <span class="radio_button"><Radio radio_value="O">{"O"}</Radio></span>
-                    // <label for="O">{ "O" }</label>
-                // </div> 
-                // { self.children.props.items.iter().map(|x| x.view()).collect::<Html>() }
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-                <Tile>{""}</Tile>
-            </Grid>
+            <>
+            <div style="display: flex;">
+                <div style="margin-top: 33%;">
+                    <PlayerSettings player=PlayerTurn::PlayerOne>{""}</PlayerSettings>
+                </div>
+                <div style="margin: 20px; margin-bottom: 0px;">
+                    <Grid>
+                        // self.tiles.iter().map(|x| x.view()).collect::<Html>()
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                        <Tile>{""}</Tile>
+                    </Grid>
+                </div>
+                <div style="margin-top: 33%;">
+                    <PlayerSettings player=PlayerTurn::PlayerTwo>{""}</PlayerSettings>
+                </div>
+            </div>
+            <RecordGameInput>{""}</RecordGameInput>
+            </>
         }
     }
 }
